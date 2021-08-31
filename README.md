@@ -28,7 +28,7 @@ sudo /etc/init.d/jenkins restart
 ## Download the ec2.py and ec2.ini
 ```
 curl -O https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.ini
-curl -O https://raw.githubusercontent.com/ansible/ansible/stable-1.9/plugins/inventory/ec2.py
+curl -O https://raw.githubusercontent.com/vshn/ansible-dynamic-inventory-ec2/master/ec2.py
 ```
 
 ## Create credentials 
