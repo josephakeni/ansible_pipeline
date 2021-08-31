@@ -1,0 +1,7 @@
+[localhost]
+jenkins_server           ansible_host=localhost       ansible_connection=local      ansible_user=ubuntu
+[dev]
+dev_app_server       ansible_host=10.0.1.253       ansible_connection=ssh        ansible_user=ec2-user
+[prod]
+prod_app_server       ansible_host=10.0.2.161       ansible_connection=ssh        ansible_user=ec2-user
+
