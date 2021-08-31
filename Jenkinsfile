@@ -13,6 +13,7 @@ pipeline{
                 sh 'sudo chmod +x inventory/dev/ec2*'
                 sh 'ls -ltr inventory/dev/'
                 sh '''
+                sudo -H pip3 install --user boto
                 export ANSIBLE_HOST_KEY_CHECKING=False
                 export ANSIBLE_HOSTS=/ansible_pipeline/inventory/dev/ec2.py
                 export EC2_INI_PATH=/ansible_pipeline/inventory/dev/ec2.ini
