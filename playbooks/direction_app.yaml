@@ -1,0 +1,21 @@
+---
+- hosts: tag_Role_Prod_App_Server
+  remote_user: ec2-user
+  become: yes
+  gather_facts: true
+  roles:
+    - roles/common_packages
+    - roles/docker
+- hosts: tag_Role_Dev_App_Server
+  remote_user: ec2-user
+  become: yes
+  gather_facts: true
+  roles:
+    - roles/common_packages
+    - roles/docker
+- hosts: localhost
+  become: true
+  gather_facts: true
+  roles:
+    - roles/common_packages
+    - roles/jenkins

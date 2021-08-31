@@ -1,0 +1,68 @@
+---
+# tasks file for docker
+- name: Install aptitude using apt
+  become: true
+  apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+  when: ansible_os_family == 'Debian'
+
+- name: "Installing Docker Prerequisite packages"
+  become: true
+  yum:
+    name: "{{ install_redhat_packages }}"
+    state: latest
+  when: ansible_os_family == 'RedHat'
+- name: "Installing Docker Prerequisite packages"
+  become: true
+  apt:
+    name: "{{ install_debian_packages }}"
+    state: latest
+  when: ansible_os_family == 'Debian'
+
+# - name: "Configuring docker-ce repo"
+#   become: true
+#   get_url:
+#     url: https://download.docker.com/linux/centos/docker-ce.repo
+#     dest: /etc/yum.repos.d/docker-ce.repo
+#     mode: 0644
+#   when: ansible_os_family == 'RedHat'
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: deb https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+  when: ansible_os_family == 'Debian'
+
+- name: " Installing Docker latest version"
+  become: true
+  yum:
+    name: docker
+    state: latest 
+  when: ansible_os_family == 'RedHat'
+
+- name: Update apt and install docker-ce
+  apt: 
+    update_cache: yes 
+    name: docker-ce 
+    state: latest
+  when: ansible_os_family == 'Debian'
+
+- name: Update apt and install docker-compose
+  apt:
+    update_cache: yes
+    name: docker-compose
+    state: latest
+  when: ansible_os_family == 'Debian'
+ 
+- name: " Starting and Enabling Docker service"
+  become: true
+  service:
+    name: docker
+    state: started
+    enabled: yes
+#  when: ansible_os_family == 'RedHat'

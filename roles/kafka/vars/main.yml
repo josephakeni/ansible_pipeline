@@ -1,0 +1,4 @@
+---
+# vars file for kafka
+node_type: webserver
+node_env: dev

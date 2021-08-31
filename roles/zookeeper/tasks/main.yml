@@ -1,0 +1,22 @@
+---
+# tasks file for zookeeper
+
+- name: Enable and Start zookeeper service, if not enabled
+  become: true
+  ansible.builtin.service:
+    name: zookeeper
+    enabled: yes
+
+- name: Enable and Start zookeeper service, if not enabled
+  become: true
+  ansible.builtin.service:
+    name: zookeeper
+    state: started
+
+- name: Template file for Creating message_producer.py
+  become: true
+  ansible.builtin.template:
+    src: message_producer.j2
+    dest: /home/kafka/message_producer.py
+    owner: root
+    mode: '0777'

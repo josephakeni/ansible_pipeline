@@ -1,0 +1,16 @@
+---
+# vars file for common_packages
+install_common_packages:
+  - "git"
+  - "wget"
+  - "curl"
+  - "unzip"
+  - "java-1.8.0-openjdk-devel-debug.x86_64"
+  - "pip"
+install_common_ubuntu_packages:
+  - "git"
+  - "wget"
+  - "curl"
+  - "unzip"
+  - "openjdk-8-jdk"
+  - "python-pip"

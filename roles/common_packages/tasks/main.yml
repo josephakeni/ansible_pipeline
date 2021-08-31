@@ -1,0 +1,14 @@
+---
+# tasks file for common_packages
+- name: Install tools on RedHat
+  become: true
+  yum:
+    name: "{{ install_common_packages }}"
+    state: installed
+  when: ansible_os_family == 'RedHat' or ansible_distribution == 'Red Hat Enterprise Linux'
+- name: install tools on ubuntu
+  become: true
+  apt:
+    name: "{{ install_common_ubuntu_packages }}"
+    state:  present
+  when: ansible_os_family == 'Debian' or ansible_distribution == 'Ubuntu'

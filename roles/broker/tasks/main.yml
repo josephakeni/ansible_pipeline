@@ -1,0 +1,21 @@
+---
+# tasks file for broker
+- name: Enable and Start Kafka service, if not enabled
+  become: true
+  ansible.builtin.service:
+    name: kafka
+    enabled: yes
+
+- name: Enable and Start Kafka service, if not enabled
+  become: true
+  ansible.builtin.service:
+    name: kafka
+    state: started
+  
+- name: Template file for Creating message_consumer.py
+  become: true
+  ansible.builtin.template:
+    src: message_consumer.j2
+    dest: /home/kafka/message_consumer.py
+    owner: root
+    mode: '0777'

@@ -1,0 +1,16 @@
+---
+# vars file for docker
+install_debian_packages:
+- "apt-transport-https"
+- "ca-certificates"
+- "curl"
+- "gnupg-agent"
+- "software-properties-common"
+- "python3-pip"
+- "python3-setuptools"
+install_redhat_packages:
+- "epel-release"
+- "yum-utils"
+- "device-mapper-persistent-data"
+- "lvm2"
+

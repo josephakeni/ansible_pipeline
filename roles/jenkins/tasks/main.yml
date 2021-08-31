@@ -1,0 +1,92 @@
+---
+# tasks file for jenkins
+# - name: Add the user 'jenkins' with a specific uid and a primary group of 'sudoers'
+#   become: true
+#   ansible.builtin.user:
+#     name: jenkins
+#     comment: Jenkins
+# #    uid: 1040
+#     group: sudo
+
+# - name: Create a 2048-bit SSH key for user jenkins in ~jenkins/.ssh/id_rsa.pub
+#   become: true
+#   ansible.builtin.user:
+#     name: jenkins
+#     generate_ssh_key: yes
+#     ssh_key_bits: 2048
+#     ssh_key_file: .ssh/id_rsa
+
+# - name: Template file for Creating id_rsa.pub
+#   become: true
+#   ansible.builtin.template:
+#     src: id_rsa_pub.j2
+#     dest: /home/jenkins/.ssh/id_rsa.pub
+#     owner: jenkins
+#     group: sudo
+#     mode: '0655'
+#   # when: ansible_os_family == 'Debian'
+
+- name: ensure the jenkins apt repository key is installed
+  apt_key: 
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key 
+    state: present
+  become: yes
+  when: ansible_os_family == 'Debian'
+
+- name: ensure the repository is configured
+  apt_repository:  
+    repo: 'deb https://pkg.jenkins.io/debian-stable binary/' 
+    state: present
+  become: yes
+  when: ansible_os_family == 'Debian'
+
+- name: ensure jenkins is installed
+  apt:  
+    name: jenkins 
+    update_cache: yes
+  become: yes
+  when: ansible_os_family == 'Debian'
+
+- name: ensure jenkins is running
+  service:  
+    name: jenkins 
+    state: started
+  when: ansible_os_family == 'Debian'
+
+- name: Ensure Jenkins Repository is Installed
+  yum_repository:
+    name: jenkins
+    state: present
+    description: Official Jenkins Yum Repo
+    baseurl: http://pkg.jenkins.io/redhat
+    gpgkey: https://jenkins-ci.org/redhat/jenkins-ci.org.key
+    gpgcheck: yes
+    enabled: yes
+  when: ansible_os_family == 'RedHat'
+  
+- name: Ensure Jenkins is Installed
+  yum :
+    name: jenkins
+    update_cache: yes
+    state: present
+  when: ansible_os_family == 'RedHat'
+  
+- name: Enable and Start the Jenkins Service
+  service:
+    name: jenkins
+    enabled: yes
+    state: started
+  when: ansible_os_family == 'RedHat'
+
+- name: sleep for 30 seconds and continue with play
+  wait_for: timeout=30
+  delegate_to: localhost
+
+- name: init password jenkin
+  shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+  changed_when: false
+  register: result
+
+- name: print init password jenkins
+  debug:
+    var: result.stdout
