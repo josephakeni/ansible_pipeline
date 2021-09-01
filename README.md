@@ -38,7 +38,9 @@ curl -O https://raw.githubusercontent.com/vshn/ansible-dynamic-inventory-ec2/mas
 |aws_secret_access_key |aws_secret_access_key	           |Secret text		              | Update |
 |aws_access_key_id	   |aws_access_key_id	               |Secret text		              |Update |
 |ansible_ssh	       |jenkins	                           |SSH Username with private key |Update |
-|git_hub	           |josephakeni/****** (GitHub login)  |Username with password        |GitHub login|	
+|git_hub	           |josephakeni/****** (GitHub login)  |Username with password        |GitHub login|
+|DIRECTION_API_KEY	   |DIRECTION_API_KEY	               |Secret text		|Update |
+|DockerHub	           |jakeni/******	                   |Username with password		|Update |
 
 ## Return private IP from ansible dynamic inventory on AWS
 Within ec2.ini, edit this line:
